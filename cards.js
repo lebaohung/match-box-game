@@ -25,7 +25,8 @@ var data = {
 }
 
 
-function selectComponent(event) {
+function selectComponent(event) { 
+console.log("select");
     const selected = event.currentTarget.dataset.component;
     const {selectedComponents, correctCombinations} = this.data;
 
@@ -38,6 +39,7 @@ function selectComponent(event) {
         const combined = selectedComponents.join('');
         const result = correctCombinations[combined] || '错误组合';
         this.setData({result});
+        document.getElementById("result").innerHTML  = result;
         this.resetSelection();
     }
 }
@@ -49,7 +51,7 @@ function resetSelection() {
 }
 
 
-var cardSet;
+var charList;
 var board = [];
 var rows = 4;
 var columns = 5;
@@ -63,17 +65,17 @@ window.onload = function () {
 }
 
 function shuffleCards() {
-    cardSet = cardList.concat(cardList); //two of each card
-    console.log(cardSet);
+    charList = data.components.concat(data.components); //two of each card
+    console.log(charList);
     //shuffle
-    for (let i = 0; i < cardSet.length; i++) {
-        let j = Math.floor(Math.random() * cardSet.length); //get random index
+    for (let i = 0; i < charList.length; i++) {
+        let j = Math.floor(Math.random() * charList.length); //get random index
         //swap
-        let temp = cardSet[i];
-        cardSet[i] = cardSet[j];
-        cardSet[j] = temp;
+        let temp = charList[i];
+        charList[i] = charList[j];
+        charList[j] = temp;
     }
-    console.log(cardSet);
+    console.log(charList);
 }
 
 function startGame() {
@@ -81,15 +83,18 @@ function startGame() {
     for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
-            let cardImg = cardSet.pop();
-            row.push(cardImg); //JS
+            let character = charList.pop();
+            row.push(character); //JS
 
             // <img id="0-0" class="card" src="water.jpg">
-            let box = document.createElement("img");
-            box.id = r.toString() + "-" + c.toString();
-            box.src = cardImg + ".jpg";
-            box.classList.add("card");
-            box.addEventListener("click", selectCard);
+            let box = document.createElement("button");
+            box.setAttribute("class", "button");
+            box.textContent = character;
+            
+            // box.id = r.toString() + "-" + c.toString();
+            // box.src = character + ".jpg";
+            // box.classList.add("card");
+            box.addEventListener("click", selectComponent);
             document.getElementById("board").append(box);
 
         }
@@ -97,7 +102,7 @@ function startGame() {
     }
 
     console.log(board);
-    setTimeout(hideCards, 1000);
+    // setTimeout(hideCards, 1000);
 }
 
 function hideCards() {
