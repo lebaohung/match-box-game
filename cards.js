@@ -73,7 +73,7 @@ window.onload = function () {
 }
 
 function shuffleCards() {
-    charList = Array(8).fill(data.components).reduce((a, b) => a.concat(b));
+    charList = Array(16).fill(data.components).reduce((a, b) => a.concat(b));
     console.log(charList);
     //shuffle
     for (let i = 0; i < charList.length; i++) {
@@ -88,9 +88,9 @@ function shuffleCards() {
 
 function startGame() {
     //arrange the board 4x5
-    for (let r = 0; r < rows; r++) {
+    for (let r = 0; r < 6; r++) {
         let row = [];
-        for (let c = 0; c < columns; c++) {
+        for (let c = 0; c < 16; c++) {
             let character = charList.pop();
             row.push(character); //JS
 
