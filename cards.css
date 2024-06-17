@@ -7,14 +7,20 @@ body {
 }
 
 #board {
-    height: 56%;
-    width: 19%;
+    
     margin: 0 auto;
     flex-wrap: wrap;
     background-color: #d9d7cb;
     border: 9px solid #d9d7cb;
     border-radius: 7px;
     margin-top: 13%;
+}
+
+@media (min-width: 1024px) {
+    #board {
+        height: 56%;
+        width: 19%;
+    }
 }
 
 .card {
