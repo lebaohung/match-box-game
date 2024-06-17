@@ -26,8 +26,7 @@ var data = {
 
 
 function selectComponent(event) { 
-console.log("select");
-    const selected = event.currentTarget.dataset.component;
+    const selected = event.target.innerHTML;
     const selectedComponents = data.selectedComponents;
     const correctCombinations = data.correctCombinations;
 
@@ -40,9 +39,10 @@ console.log("select");
         const combined = selectedComponents.join('');
         const result = correctCombinations[combined] || '错误组合';
         data.result = result;
-        console.log(result);
         document.getElementById("result").innerHTML  = result;
-        document.getElementsByClassName("button").disabled = true;
+        
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.disabled = true);
 
         resetSelection();
     }
@@ -53,6 +53,8 @@ function resetSelection() {
         data.selectedComponents = [];
         data.result = '';
         document.getElementById("result").innerHTML  = data.result;
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.disabled = false);
     }, 1000);
 }
 
@@ -71,7 +73,7 @@ window.onload = function () {
 }
 
 function shuffleCards() {
-    charList = data.components.concat(data.components); //two of each card
+    charList = Array(8).fill(data.components).reduce((a, b) => a.concat(b));
     console.log(charList);
     //shuffle
     for (let i = 0; i < charList.length; i++) {
