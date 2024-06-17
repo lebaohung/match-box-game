@@ -55,7 +55,6 @@ window.onload = function () {
 
 function shuffleCards() {
     charList = Array(2).fill(data.components).reduce((a, b) => a.concat(b));
-    console.log(charList);
     //shuffle
     for (let i = 0; i < charList.length; i++) {
         let j = Math.floor(Math.random() * charList.length); //get random index
@@ -64,7 +63,6 @@ function shuffleCards() {
         charList[i] = charList[j];
         charList[j] = temp;
     }
-    console.log(charList);
 }
 
 function startGame() {
@@ -86,7 +84,5 @@ function startGame() {
         }
         board.push(row);
     }
-
-    console.log(board);
 }
 
