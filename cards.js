@@ -28,26 +28,32 @@ var data = {
 function selectComponent(event) { 
 console.log("select");
     const selected = event.currentTarget.dataset.component;
-    const {selectedComponents, correctCombinations} = this.data;
+    const selectedComponents = data.selectedComponents;
+    const correctCombinations = data.correctCombinations;
 
     if (selectedComponents.length < 2) {
         selectedComponents.push(selected);
-        this.setData({selectedComponents});
+        data.selectedComponents = selectedComponents;
     }
 
     if (selectedComponents.length === 2) {
         const combined = selectedComponents.join('');
         const result = correctCombinations[combined] || '错误组合';
-        this.setData({result});
+        data.result = result;
+        console.log(result);
         document.getElementById("result").innerHTML  = result;
-        this.resetSelection();
+        document.getElementsByClassName("button").disabled = true;
+
+        resetSelection();
     }
 }
 
 function resetSelection() {
     setTimeout(() => {
-        this.setData({selectedComponents: [], result: ''});
-    }, 1500);
+        data.selectedComponents = [];
+        data.result = '';
+        document.getElementById("result").innerHTML  = data.result;
+    }, 1000);
 }
 
 
@@ -88,6 +94,7 @@ function startGame() {
 
             // <img id="0-0" class="card" src="water.jpg">
             let box = document.createElement("button");
+            box.setAttribute("id", "button2");
             box.setAttribute("class", "button");
             box.textContent = character;
             
