@@ -41,7 +41,7 @@ function resetSelection() {
         document.getElementById("result").innerHTML  = data.result;
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.disabled = false);
-    }, 1500);
+    }, 1100);
 }
 
 
