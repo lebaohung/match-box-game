@@ -8,12 +8,11 @@ body {
 
 #board {
     height: 56%;
-    width: 34%;
+    width: 19%;
     margin: 0 auto;
-    display: flex;
     flex-wrap: wrap;
-    background-color: whitesmoke;
-    border: 9px solid #ede2ae;
+    background-color: #d9d7cb;
+    border: 9px solid #d9d7cb;
     border-radius: 7px;
     margin-top: 13%;
 }
@@ -29,6 +28,14 @@ button {
     height: 50px;
     font-size: 18px;
     padding: 10px;
-    margin-top: 4px;
+    margin: 4px;
     border-radius: 7px;
+    border: 1px solid #ccc;
+    background-color: #e1b79f;
+}
+
+.result {
+    font-size: 24px;
+    font-weight: bold;
+    color: #b35a27;
 }

@@ -1,17 +1,3 @@
-var errors = 0;
-var cardList = [
-    "darkness",
-    "double",
-    "fairy",
-    "fighting",
-    "fire",
-    "grass",
-    "lightning",
-    "metal",
-    "psychic",
-    "water"
-];
-
 var data = {
     components: ['子', '女', '亻', '户', '氵', '火'],
     correctCombinations: {
@@ -55,17 +41,12 @@ function resetSelection() {
         document.getElementById("result").innerHTML  = data.result;
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.disabled = false);
-    }, 1000);
+    }, 1500);
 }
 
 
 var charList;
 var board = [];
-var rows = 4;
-var columns = 5;
-
-var card1Selected;
-var card2Selected;
 
 window.onload = function () {
     shuffleCards();
@@ -73,7 +54,7 @@ window.onload = function () {
 }
 
 function shuffleCards() {
-    charList = Array(6).fill(data.components).reduce((a, b) => a.concat(b));
+    charList = Array(2).fill(data.components).reduce((a, b) => a.concat(b));
     console.log(charList);
     //shuffle
     for (let i = 0; i < charList.length; i++) {
@@ -88,21 +69,17 @@ function shuffleCards() {
 
 function startGame() {
     //arrange the board 4x5
-    for (let r = 0; r < 8; r++) {
+    for (let r = 0; r < 4; r++) {
         let row = [];
-        for (let c = 0; c < 4; c++) {
+        for (let c = 0; c < 3; c++) {
             let character = charList.pop();
             row.push(character); //JS
 
-            // <img id="0-0" class="card" src="water.jpg">
             let box = document.createElement("button");
             box.setAttribute("id", "button2");
             box.setAttribute("class", "button");
             box.textContent = character;
             
-            // box.id = r.toString() + "-" + c.toString();
-            // box.src = character + ".jpg";
-            // box.classList.add("card");
             box.addEventListener("click", selectComponent);
             document.getElementById("board").append(box);
 
@@ -111,52 +88,5 @@ function startGame() {
     }
 
     console.log(board);
-    // setTimeout(hideCards, 1000);
 }
 
-function hideCards() {
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < columns; c++) {
-            let card = document.getElementById(r.toString() + "-" + c.toString());
-            card.src = "back.jpg";
-        }
-    }
-}
-
-function selectCard() {
-
-    if (this.src.includes("back")) {
-        if (!card1Selected) {
-            card1Selected = this;
-
-            let coords = card1Selected.id.split("-"); //"0-1" -> ["0", "1"]
-            let r = parseInt(coords[0]);
-            let c = parseInt(coords[1]);
-
-            card1Selected.src = board[r][c] + ".jpg";
-        } else if (!card2Selected && this != card1Selected) {
-            card2Selected = this;
-
-            let coords = card2Selected.id.split("-"); //"0-1" -> ["0", "1"]
-            let r = parseInt(coords[0]);
-            let c = parseInt(coords[1]);
-
-            card2Selected.src = board[r][c] + ".jpg";
-            setTimeout(update, 1000);
-        }
-    }
-
-}
-
-function update() {
-    //if cards aren't the same, flip both back
-    if (card1Selected.src != card2Selected.src) {
-        card1Selected.src = "back.jpg";
-        card2Selected.src = "back.jpg";
-        errors += 1;
-        document.getElementById("errors").innerText = errors;
-    }
-
-    card1Selected = null;
-    card2Selected = null;
-}
