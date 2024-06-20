@@ -50,6 +50,7 @@ function resetTimer() {
     remainingTime = 300000; // Reset to 5 minutes
     document.getElementById('timer').textContent = '05:00';
     document.getElementById('message').textContent = ''; // Clear any previous message
+    score = 0;
 }
 
 
