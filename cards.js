@@ -10,7 +10,9 @@ var data = {
     result: ''
 }
 let timerInterval;
-let remainingTime = 300000; // 5 minutes in milliseconds
+let remainingTime = 60000; // 5 minutes in milliseconds
+
+let score = 0;
 
 function updateTime() {
     if (remainingTime > 0) {
@@ -64,8 +66,13 @@ function selectComponent(event) {
     if (selectedComponents.length === 2) {
         const combined = selectedComponents.join('');
         const result = correctCombinations[combined] || '错误组合';
+        if (correctCombinations[combined]) {
+            score++;
+        }
+        
         data.result = result;
         document.getElementById("result").innerHTML  = result;
+        document.getElementById("score").innerHTML  = score;
         
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.disabled = true);
