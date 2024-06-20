@@ -72,7 +72,7 @@ function selectComponent(event) {
         
         data.result = result;
         document.getElementById("result").innerHTML  = result;
-        document.getElementById("score").innerHTML  = score;
+        document.getElementById("score").innerHTML  = "Score: " + score;
         
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.disabled = true);
