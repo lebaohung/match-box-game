@@ -17,6 +17,8 @@ function updateTime() {
         remainingTime -= 1000; // Decrement by 1 second (1000 milliseconds)
     } else {
         clearInterval(timerInterval); // Stop the timer when it reaches 0
+        document.getElementById('message').textContent = 'Time is up!';
+        remainingTime = 0;
     }
 
     let minutes = Math.floor(remainingTime / 60000);
@@ -32,13 +34,20 @@ function updateTime() {
 function startTimer() {
     if (!timerInterval) {
         timerInterval = setInterval(updateTime, 1000);
+        document.getElementById('message').textContent = ''; // Clear any previous message
     }
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
 }
 
 function resetTimer() {
     stopTimer();
     remainingTime = 300000; // Reset to 5 minutes
     document.getElementById('timer').textContent = '05:00';
+    document.getElementById('message').textContent = ''; // Clear any previous message
 }
 
 
