@@ -12,14 +12,16 @@ var data = {
 let timerInterval;
 let remainingTime = 60000; // 5 minutes in milliseconds
 
-let score = 0;
+let correctPair = [];
 
 function updateTime() {
     if (remainingTime > 0) {
         remainingTime -= 1000; // Decrement by 1 second (1000 milliseconds)
     } else {
         clearInterval(timerInterval); // Stop the timer when it reaches 0
+        disableButtonsInDiv('board')
         document.getElementById('message').textContent = 'Time is up!';
+        document.getElementById("score2").innerHTML  = "Score: " + correctPair.length;
         remainingTime = 0;
     }
 
@@ -38,6 +40,8 @@ function startTimer() {
         timerInterval = setInterval(updateTime, 1000);
         document.getElementById('message').textContent = ''; // Clear any previous message
     }
+    enableButtonsInDiv('board');
+    hideStartButton();
 }
 
 function stopTimer() {
@@ -47,10 +51,10 @@ function stopTimer() {
 
 function resetTimer() {
     stopTimer();
-    remainingTime = 300000; // Reset to 5 minutes
-    document.getElementById('timer').textContent = '05:00';
+    remainingTime = 60000; // Reset to 5 minutes
+    document.getElementById('timer').textContent = '01:00';
     document.getElementById('message').textContent = ''; // Clear any previous message
-    score = 0;
+    disableButtonsInDiv('board');
 }
 
 
@@ -66,17 +70,20 @@ function selectComponent(event) {
 
     if (selectedComponents.length === 2) {
         const combined = selectedComponents.join('');
-        const result = correctCombinations[combined] || '错误组合';
-        if (correctCombinations[combined]) {
-            score++;
+        let result = correctCombinations[combined];
+        if (result) {
+            if (!correctPair.includes(result)) {
+                correctPair.push(result);
+            }
+            document.getElementById("score").innerHTML  = "Correct: " + correctPair.join(" ,");
+        } else {
+           result = '错误组合'; 
         }
         
         data.result = result;
         document.getElementById("result").innerHTML  = result;
-        document.getElementById("score").innerHTML  = "Score: " + score;
-
+        
         disableButtonsInDiv("board");
-
         resetSelection();
     }
 }
@@ -87,7 +94,7 @@ function resetSelection() {
         data.result = '';
         document.getElementById("result").innerHTML  = data.result;
         enableButtonsInDiv('board')
-    }, 1100);
+    }, 500);
 }
 
 
@@ -95,6 +102,7 @@ var charList;
 var board = [];
 
 window.onload = function () {
+    resetTimer();
     shuffleCards();
     startGame();
 }
@@ -123,11 +131,10 @@ function startGame() {
             box.setAttribute("id", "button2");
             box.setAttribute("class", "button");
             box.textContent = character;
+            box.setAttribute("disabled", true)
             
             box.addEventListener("click", selectComponent);
             document.getElementById("board").append(box);
-
-            disableButtonsInDiv('board');
 
         }
         board.push(row);
@@ -146,3 +153,7 @@ function enableButtonsInDiv(divId) {
     buttons.forEach(button => button.disabled = false);
 }
 
+function hideStartButton() {
+    const startButton = document.getElementById('startButton');
+    startButton.style.display = 'none';
+}
