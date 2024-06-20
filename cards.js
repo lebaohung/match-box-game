@@ -9,6 +9,37 @@ var data = {
     selectedComponents: [],
     result: ''
 }
+let timerInterval;
+let remainingTime = 300000; // 5 minutes in milliseconds
+
+function updateTime() {
+    if (remainingTime > 0) {
+        remainingTime -= 1000; // Decrement by 1 second (1000 milliseconds)
+    } else {
+        clearInterval(timerInterval); // Stop the timer when it reaches 0
+    }
+
+    let minutes = Math.floor(remainingTime / 60000);
+    let seconds = Math.floor((remainingTime % 60000) / 1000);
+
+    // Format numbers to always have two digits
+    minutes = String(minutes).padStart(2, '0');
+    seconds = String(seconds).padStart(2, '0');
+
+    document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+}
+
+function startTimer() {
+    if (!timerInterval) {
+        timerInterval = setInterval(updateTime, 1000);
+    }
+}
+
+function resetTimer() {
+    stopTimer();
+    remainingTime = 300000; // Reset to 5 minutes
+    document.getElementById('timer').textContent = '05:00';
+}
 
 
 function selectComponent(event) { 
